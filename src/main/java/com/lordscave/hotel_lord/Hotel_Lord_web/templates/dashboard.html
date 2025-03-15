@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - HotelLord</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  
+    <div class="navbar">
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='hotel_lord_icon.png') }}" alt="Hotel Lord Logo" class="logo">
+        </div>
+        <div class="nav-links">
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('my_bookings') }}">My Bookings</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <h2>Book a Room</h2>
+    
+        
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                <div class="alert-container">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+    
+   
+        <form action="{{ url_for('book_room') }}" method="POST" onsubmit="return validateDates()">
+            <div class="mb-3">
+                <label class="form-label">Full Name :</label>
+                <input type="text" name="name" class="form-control" value="{{ current_user.username }}" readonly>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Age :</label>
+                <input type="number" name="age" class="form-control" required min="18">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Gender :</label>
+                <select name="gender" class="form-select" required>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Number of Guests :</label>
+                <input type="number" name="guests" class="form-control" required min="1">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Check-in Date :</label>
+                <input type="date" name="checkin_date" id="checkin_date" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Check-out Date :</label>
+                <input type="date" name="checkout_date" id="checkout_date" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Select Suite Type :</label>
+                <select name="room_type" class="form-select" required>
+                    {% for suite in suites %}
+                        <option value="{{ suite.roomtype }}">{{ suite.roomtype }} - ${{ suite.ratepernight }} per night</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <button type="submit" class="btn btn-primary w-100">Book Now</button>
+        </form>
+    </div>
+
+    <script>
+        function validateDates() {
+            const checkin = document.getElementById("checkin_date").value;
+            const checkout = document.getElementById("checkout_date").value;
+
+            if (new Date(checkout) <= new Date(checkin)) {
+                alert("Check-out date must be after check-in date.");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>

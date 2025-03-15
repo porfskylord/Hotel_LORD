@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings - HotelLord</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='hotel_lord_icon.png') }}" alt="Hotel Lord Logo" class="logo">
+        </div>
+        <div class="nav-links">
+            <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>My Bookings</h2>
+        {% if bookings %}
+            {% for booking in bookings %}
+                <div class="booking-card">
+                    <p>Suite Type: {{ booking.suittype }}</p> 
+                    <p>Check-in: {{ booking.checkin_date }}</p>
+                    <p>Check-out: {{ booking.checkout_date }}</p>
+                    <p>Total Price: ${{ booking.total_price }}</p>
+                    <p>Status: {{ booking.payment_status }}</p>
+    
+                    <a href="{{ url_for('cancel_booking', booking_id=booking.id) }}">
+                        <button class="btn btn-danger">Cancel Booking</button>
+                    </a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No bookings found.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

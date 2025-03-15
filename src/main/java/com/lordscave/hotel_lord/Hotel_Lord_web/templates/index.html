@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HotelLord - Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='hotel_lord_icon.png') }}" alt="Hotel Lord Logo" class="logo">
+        </div>
+        <div class="nav-links">
+            <a href="#" onclick="openPopup('loginPopup')">Login</a>
+            <a href="#" onclick="openPopup('registerPopup')">Register</a>
+        </div>
+    </div>
+
+    <div class="container" id="mainContent">
+        <h2>Welcome to HotelLord</h2>
+        <p>Book your room now with easy online payment and cancellation options.</p>
+        <button class="btn" onclick="openPopup('loginPopup')">Login to Book</button>
+    </div>
+
+  
+    <div id="loginPopup" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="closeAllPopups()">&times;</span>
+            <h2>Login</h2>
+            <form action="{{ url_for('login') }}" method="POST">
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button class="btn" type="submit">Login</button>
+            </form>
+            <p>Don't have an account? <a href="#" onclick="switchPopup('loginPopup', 'registerPopup')">Register here</a></p>
+        </div>
+    </div>
+
+
+    <div id="registerPopup" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="closeAllPopups()">&times;</span>
+            <h2>Create an Account</h2>
+            <form action="{{ url_for('register') }}" method="POST">
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button class="btn" type="submit">Register</button>
+            </form>
+            <p>Already have an account? <a href="#" onclick="switchPopup('registerPopup', 'loginPopup')">Login here</a></p>
+        </div>
+    </div>
+
+    <script>
+        function openPopup(id) {
+            document.getElementById("mainContent").style.display = "none";
+            document.getElementById(id).style.display = "block";
+        }
+
+        function closeAllPopups() {
+            document.getElementById("mainContent").style.display = "block";
+            document.getElementById("loginPopup").style.display = "none";
+            document.getElementById("registerPopup").style.display = "none";
+        }
+
+        function switchPopup(current, target) {
+            document.getElementById(current).style.display = "none";
+            document.getElementById(target).style.display = "block";
+        }
+    </script>
+</body>
+</html>
