@@ -5,7 +5,7 @@
 <?import javafx.scene.chart.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.lordscave.hotel_lord.DashboardController"
+
             style="-fx-background-color: #181818;">
 
     <!-- Top Bar -->

@@ -60,7 +60,7 @@
             <TextField fx:id="userFieldL" prefHeight="30.0" prefWidth="549.0"
                        style="-fx-background-radius: 5;
                   -fx-background-color: #212121;
-                  -fx-text-fill: #B0B0B0;-fx-prompt-text-fill: #808080; /* Lighter Grey for Placeholder */">
+                  -fx-text-fill: #B0B0B0;-fx-prompt-text-fill: #808080;">
                <font>
                   <Font size="14.0" />
                </font>
@@ -83,8 +83,8 @@
             <TextField fx:id="passFieldL" prefHeight="30.0" prefWidth="549.0"
                        style="-fx-background-radius: 5;
                   -fx-background-color: #212121;
-                  -fx-text-fill: #B0B0B0; /* Light Grey Text */
-                  -fx-prompt-text-fill: #808080; /* Lighter Grey for Placeholder */">
+                  -fx-text-fill: #B0B0B0;
+                  -fx-prompt-text-fill: #808080;">
                <font>
                   <Font size="14.0" />
                </font>
