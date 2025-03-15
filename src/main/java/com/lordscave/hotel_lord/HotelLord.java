@@ -17,9 +17,9 @@ public class HotelLord extends Application {
         Parent root = fxmlLoader.load();
 
         Scene scene = new Scene(root, 565, 280);
-        scene.setFill(Color.TRANSPARENT); // Ensures transparency
+        scene.setFill(Color.TRANSPARENT);
 
-        stage.initStyle(StageStyle.TRANSPARENT); // Fully removes white corners
+        stage.initStyle(StageStyle.TRANSPARENT);
         stage.setScene(scene);
         stage.show();
     }

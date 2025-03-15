@@ -22,13 +22,13 @@ public class MainWindowController {
 
     private boolean sidebarVisible = true;
 
-    // Store menu name and corresponding FXML path
+
     private Map<String, String> menuMap = new HashMap<>();
 
     @FXML
     public void initialize() {
-        loadMenuItems(); // Load menu dynamically
-        loadPage("dashboard.fxml"); // Open Dashboard on startup
+        loadMenuItems();
+        loadPage("dashboard.fxml");
     }
 
     @FXML
@@ -39,13 +39,13 @@ public class MainWindowController {
         }
 
         if (sidebarVisible) {
-            // Animate out first, then remove
+
             TranslateTransition slideOut = new TranslateTransition(Duration.millis(300), menuContainer);
             slideOut.setToX(-menuContainer.getWidth());
             slideOut.setOnFinished(event -> mainBorderPane.setLeft(null));
             slideOut.play();
         } else {
-            // Restore sidebar before animating
+
             mainBorderPane.setLeft(menuContainer);
             menuContainer.setTranslateX(-menuContainer.getWidth());
 
@@ -59,20 +59,20 @@ public class MainWindowController {
 
     @FXML
     public void closeWindow() {
-        // Closes the application safely
+
         Platform.exit();
         System.exit(0);
     }
 
     private void loadMenuItems() {
-        List<MenuItem> menuItems = DatabaseConnection.getMenuItems(); // Fetch menu data
+        List<MenuItem> menuItems = DatabaseConnection.getMenuItems();
 
         for (MenuItem item : menuItems) {
             Hyperlink link = new Hyperlink(item.getName());
-            link.setOnAction(e -> loadPage(item.getFxmlPath())); // Set click event
+            link.setOnAction(e -> loadPage(item.getFxmlPath()));
             link.setStyle("-fx-text-fill: white; -fx-underline: false; "
                     + "-fx-border-color: transparent; -fx-background-color: transparent;");
-            menuContainer.getChildren().add(link); // Add to VBox
+            menuContainer.getChildren().add(link);
         }
     }
 

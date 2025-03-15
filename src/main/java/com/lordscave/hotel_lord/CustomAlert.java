@@ -31,11 +31,11 @@ public class CustomAlert {
 
     @FXML
     public void initialize() {
-        // Close button actions
+
         closeBtn.setOnAction(event -> ((Stage) closeBtn.getScene().getWindow()).close());
         okBtn.setOnAction(event -> ((Stage) okBtn.getScene().getWindow()).close());
 
-        // Load app icon
+
         if (appIcon != null) {
             try {
                 Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/lordscave/hotel_lord/images/hotel_lord_icon.png")));
@@ -45,7 +45,7 @@ public class CustomAlert {
             }
         }
 
-        // Enable window dragging
+
         titleBar.setOnMousePressed(event -> {
             xOffset = event.getSceneX();
             yOffset = event.getSceneY();

@@ -72,7 +72,6 @@ public class BookingController {
         File file = fileChooser.showSaveDialog(null);
 
         if (file != null) {
-            // Implement PDF generation logic (using iText library or similar)
             showAlert("Success", "Booking Confirmation saved to " + file.getAbsolutePath());
         }
     }

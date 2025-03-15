@@ -31,11 +31,11 @@ public class ForgotPasswordService {
             return;
         }
 
-        // Show loader in UI thread
+
         LoaderPopup loader = new LoaderPopup();
         Platform.runLater(loader::show);
 
-        // Run OTP generation & sending in a background thread
+
         new Thread(() -> {
             String otp = generateOTP();
 
@@ -47,7 +47,7 @@ public class ForgotPasswordService {
                 return;
             }
 
-            if (!sendOTPEmail(email, otp)) { // Ensure sendOTPEmail uses Platform.runLater internally
+            if (!sendOTPEmail(email, otp)) {
                 Platform.runLater(() -> {
                     loader.close();
                     CustomAlert.show("Error", "Failed to send OTP email. Please try again.");
@@ -55,7 +55,7 @@ public class ForgotPasswordService {
                 return;
             }
 
-            // Close loader and show OTP verification
+
             loader.close();
 
         }).start();
@@ -64,7 +64,7 @@ public class ForgotPasswordService {
 
 
 
-    // 1️⃣ Get User Email from sec_users table
+
     private static String getUserEmail(String username) {
         String sql = "SELECT email FROM sec_users WHERE username = ?";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -78,13 +78,13 @@ public class ForgotPasswordService {
         return null;
     }
 
-    // 2️⃣ Generate a 6-digit OTP
+
     private static String generateOTP() {
         Random rand = new Random();
         return String.format("%06d", rand.nextInt(1000000));
     }
 
-    // 3️⃣ Store OTP in Database
+
     private static boolean storeOTPInDatabase(String email, String otp) {
         String sql = "UPDATE sec_users SET otp = ? WHERE email = ?";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -98,10 +98,10 @@ public class ForgotPasswordService {
         return false;
     }
 
-    // 4️⃣ Send OTP Email - Returns true if successful
+
     private static boolean sendOTPEmail(String recipientEmail, String otp) {
-        final String senderEmail = "hotellord001@gmail.com"; // Use a verified sender email
-        final String senderPassword = "hfyq ekby momd sfuw"; // Use an App Password
+        final String senderEmail = "hotellord001@gmail.com";
+        final String senderPassword = "hfyq ekby momd sfuw";
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
@@ -124,10 +124,10 @@ public class ForgotPasswordService {
             message.setText("Your OTP is: " + otp + "\n\nDo not share this code with anyone.");
 
             Transport.send(message);
-            // ✅ Show alert and wait for the user to click "OK"
+
             Platform.runLater(() -> {
                 CustomAlert.showAndWait("Success", "OTP has been sent to your email (Please check Spam too).");
-                // ✅ Only after clicking "OK", open the reset password screen
+
                 verifyAndResetPassword(recipientEmail, otp);
             });
 
@@ -139,19 +139,19 @@ public class ForgotPasswordService {
     }
 
 
-    // 5️⃣ Verify OTP and Allow Password Reset
+
     private static void verifyAndResetPassword(String email, String originalOtp) {
         Platform.runLater(() -> {
             try {
                 FXMLLoader loader = new FXMLLoader(ForgotPasswordService.class.getResource("ResetPassword.fxml"));
                 Parent root = loader.load();
 
-                // Get the controller instance and pass the email & OTP
+
                 ResetPasswordController controller = loader.getController();
                 controller.setUserEmail(email);
                 controller.setOriginalOtp(originalOtp);
 
-                // Create a new stage
+
                 Stage stage = new Stage();
                 Scene scene = new Scene(root, 465, 270);
                 scene.setFill(Color.TRANSPARENT);
@@ -163,7 +163,7 @@ public class ForgotPasswordService {
             } catch (IOException e) {
                 e.printStackTrace();
 
-                // ✅ Ensure alert is shown on the JavaFX thread
+
                 Platform.runLater(() -> CustomAlert.show("Error", "Failed to load Reset Password screen."));
             }
         });

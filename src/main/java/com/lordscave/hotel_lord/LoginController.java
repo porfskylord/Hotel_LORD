@@ -39,7 +39,7 @@ public class LoginController {
             System.err.println("Warning: Application icon not found!");
         }
 
-        // Enable dragging functionality
+
         titleBar.setOnMousePressed(event -> {
             Stage stage = (Stage) titleBar.getScene().getWindow();
             xOffset = event.getSceneX();
@@ -56,7 +56,7 @@ public class LoginController {
 
     @FXML
     public void closeWindow() {
-        // Closes the application safely
+
         Platform.exit();
         System.exit(0);
     }
@@ -64,13 +64,13 @@ public class LoginController {
     public void logingIn(ActionEvent actionEvent) {
         try {
             LoaderPopup loader = new LoaderPopup();
-            loader.show(); // Show loading screen
+            loader.show();
 
-            // Run authentication in a background thread
+
             new Thread(() -> {
                 boolean authenticated = false;
                 try {
-                    Thread.sleep(1000); // Simulate loading delay
+                    Thread.sleep(1000);
                     authenticated = authenticateUser(userFieldL.getText(), passFieldL.getText());
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -78,26 +78,26 @@ public class LoginController {
 
                 boolean finalAuthenticated = authenticated;
                 Platform.runLater(() -> {
-                    loader.close(); // Close loader after authentication is complete
+                    loader.close();
 
                     if (finalAuthenticated) {
                         System.out.println("Logged in");
 
                         try {
-                            // Load the new scene (main_window.fxml)
+
                             FXMLLoader loaderscene = new FXMLLoader(getClass().getResource("main_window.fxml"));
                             Parent root = loaderscene.load();
 
-                            // Get the current stage (login window) and close it
+
                             Stage loginStage = (Stage) userFieldL.getScene().getWindow();
                             loginStage.close();
 
-                            // Open new stage for main window
-                            Stage mainStage = new Stage();
-                            Scene scene = new Scene(root, 1300, 720); // Define the scene
-                            scene.setFill(Color.TRANSPARENT); // Ensures transparency
 
-                            // Apply transparent window style
+                            Stage mainStage = new Stage();
+                            Scene scene = new Scene(root, 1300, 720);
+                            scene.setFill(Color.TRANSPARENT);
+
+
                             mainStage.initStyle(StageStyle.TRANSPARENT);
                             mainStage.setScene(scene);
                             mainStage.show();
@@ -130,14 +130,14 @@ public class LoginController {
             if (rs.next()) {
                 String storedHashedPassword = rs.getString("password");
 
-                // Compare user input with hashed password
+
                 return PasswordUtil.verifyPassword(password, storedHashedPassword);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return false; // Authentication failed
+        return false;
     }
 
     @FXML

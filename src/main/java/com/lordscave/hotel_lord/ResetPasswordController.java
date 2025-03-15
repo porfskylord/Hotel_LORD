@@ -9,7 +9,7 @@ import javafx.scene.control.Button;
 public class ResetPasswordController {
 
     @FXML
-    private TextField otpField;  // ✅ OTP field from FXML
+    private TextField otpField;
 
     @FXML
     private PasswordField newPasswordField;
@@ -20,15 +20,15 @@ public class ResetPasswordController {
     @FXML
     private Button resetButton;
 
-    private String userEmail;  // ✅ User's email
-    private String originalOtp;  // ✅ OTP received in email
+    private String userEmail;
+    private String originalOtp;
 
     public void setUserEmail(String email) {
         this.userEmail = email;
     }
 
     public void setOriginalOtp(String otp) {
-        this.originalOtp = otp;  // ✅ Store OTP for validation
+        this.originalOtp = otp;
     }
 
     @FXML
@@ -59,14 +59,14 @@ public class ResetPasswordController {
 
         if (updatePassword(userEmail, newPassword)) {
             CustomAlert.show("Success", "Password reset successfully!");
-            resetButton.getScene().getWindow().hide(); // Close the window
+            resetButton.getScene().getWindow().hide();
         } else {
             CustomAlert.show("Error", "Failed to update password. Try again.");
         }
     }
 
     private boolean updatePassword(String email, String newPassword) {
-        // Implement your database logic here
+
         return DatabaseConnection.updateUserPassword(email, newPassword);
     }
 }

@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class CreateUser {
 
     public static void main(String[] args) {
-        String username = "a"; // Change this if needed
+        String username = "a"; 
         String rawPassword = "1";
         String hashedPassword = PasswordUtil.hashPassword(rawPassword);
 

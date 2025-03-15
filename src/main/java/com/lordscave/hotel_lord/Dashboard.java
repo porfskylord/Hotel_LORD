@@ -29,14 +29,14 @@ public class Dashboard {
 
 
 
-        // Revenue Bar Chart
+
         XYChart.Series<String, Number> revenueSeries = new XYChart.Series<>();
         revenueSeries.getData().add(new XYChart.Data<>("Jan", 400000));
         revenueSeries.getData().add(new XYChart.Data<>("Feb", 500000));
         revenueSeries.getData().add(new XYChart.Data<>("Mar", 450000));
         barRevenueStats.getData().add(revenueSeries);
 
-        // Sample Notifications
+
         lstNotifications.getItems().addAll(
                 "New Booking: Room 205",
                 "Room 302 needs cleaning",
@@ -51,11 +51,11 @@ public class Dashboard {
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {  // Use try-with-resources for ResultSet
+             ResultSet rs = stmt.executeQuery()) {
 
-            if (rs.next()) {  // Check if a result exists
-                String bookingInfo = rs.getString("Total Room Booked"); // Retrieve the column value
-                lblTotalBookings.setText(bookingInfo); // Set it to the label or text field
+            if (rs.next()) {
+                String bookingInfo = rs.getString("Total Room Booked");
+                lblTotalBookings.setText(bookingInfo);
                 pieRoomOccupancy.getData().addAll(
                         new PieChart.Data("Occupied", rs.getDouble("booked_rooms")),
                         new PieChart.Data("Available", rs.getDouble("total_rooms"))
