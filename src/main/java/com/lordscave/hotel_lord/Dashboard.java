@@ -47,7 +47,7 @@ public class Dashboard {
     private void getBookingCount() {
         String sql = "SELECT x.booked_rooms || '/' || x.total_rooms AS \"Total Room Booked\",x.booked_rooms,x.total_rooms " +
                 "FROM (SELECT COUNT(CASE WHEN isbooked = TRUE THEN 1 END) AS booked_rooms, " +
-                "COUNT(*) AS total_rooms FROM comn_roommaster) AS x";
+                "COUNT(*) AS total_rooms FROM hotel_rooms) AS x";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);

@@ -18,28 +18,38 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Objects;
+import java.util.logging.Level;
 
 public class LoginController {
     @FXML public HBox titleBar;
-    public ImageView appIcon;
-    public TextField passFieldL;
-    public TextField userFieldL;
+    @FXML public ImageView appIcon;
+    @FXML public TextField passFieldL;
+    @FXML public TextField userFieldL;
+
     private double xOffset = 0;
     private double yOffset = 0;
-    private static Stage stage;
-
 
     @FXML
     public void initialize() {
+        loadAppIcon();
+        setupDraggableWindow();
+    }
 
+
+    private void loadAppIcon() {
         try {
-            Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/lordscave/hotel_lord/images/hotel_lord_icon.png")));
+            Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/com/lordscave/hotel_lord/images/hotel_lord_icon.png"
+            )));
             appIcon.setImage(icon);
-        } catch (NullPointerException e) {
-            System.err.println("Warning: Application icon not found!");
+        } catch (NullPointerException | IllegalArgumentException e) {
+            LoggerUtil.log(Level.WARNING, "Application icon not found! Please check the file path.");
+            Platform.runLater(() -> CustomAlert.show("Error", "Something went wrong. Please contact support."));
         }
+    }
 
 
+    private void setupDraggableWindow() {
         titleBar.setOnMousePressed(event -> {
             Stage stage = (Stage) titleBar.getScene().getWindow();
             xOffset = event.getSceneX();
@@ -51,75 +61,79 @@ public class LoginController {
             stage.setX(event.getScreenX() - xOffset);
             stage.setY(event.getScreenY() - yOffset);
         });
-
     }
 
     @FXML
     public void closeWindow() {
-
         Platform.exit();
         System.exit(0);
     }
 
+    @FXML
     public void logingIn(ActionEvent actionEvent) {
-        try {
-            LoaderPopup loader = new LoaderPopup();
-            loader.show();
+        LoaderPopup loader = new LoaderPopup();
+        loader.show();
 
+        new Thread(() -> {
+            try {
+                Thread.sleep(1000);
+                boolean authenticated = authenticateUser(userFieldL.getText(), passFieldL.getText());
 
-            new Thread(() -> {
-                boolean authenticated = false;
-                try {
-                    Thread.sleep(1000);
-                    authenticated = authenticateUser(userFieldL.getText(), passFieldL.getText());
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                boolean finalAuthenticated = authenticated;
                 Platform.runLater(() -> {
                     loader.close();
-
-                    if (finalAuthenticated) {
-                        System.out.println("Logged in");
-
-                        try {
-
-                            FXMLLoader loaderscene = new FXMLLoader(getClass().getResource("main_window.fxml"));
-                            Parent root = loaderscene.load();
-
-
-                            Stage loginStage = (Stage) userFieldL.getScene().getWindow();
-                            loginStage.close();
-
-
-                            Stage mainStage = new Stage();
-                            Scene scene = new Scene(root, 1300, 720);
-                            scene.setFill(Color.TRANSPARENT);
-
-
-                            mainStage.initStyle(StageStyle.TRANSPARENT);
-                            mainStage.setScene(scene);
-                            mainStage.show();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-
-                    } else {
-                        System.out.println("Invalid credentials!");
-                    }
+                    handleLoginResult(authenticated);
                 });
-            }).start();
+
+            } catch (InterruptedException e) {
+                LoggerUtil.log(Level.WARNING, "Login thread was interrupted");
+                Thread.currentThread().interrupt();
+            } catch (Exception e) {
+                LoggerUtil.log(Level.SEVERE, "Unexpected error during authentication");
+                Platform.runLater(() -> {
+                    loader.close();
+                    CustomAlert.show("Error", "An unexpected error occurred. Please try again.");
+                });
+            }
+        }).start();
+    }
+
+
+    private void handleLoginResult(boolean authenticated) {
+        if (authenticated) {
+            LoggerUtil.log(Level.INFO, "User logged in successfully");
+            loadMainWindow();
+        } else {
+            LoggerUtil.log(Level.WARNING, "Invalid credentials!");
+            CustomAlert.show("Login Failed", "Invalid username or password. Please try again.");
+        }
+    }
+
+
+    private void loadMainWindow() {
+        try {
+            FXMLLoader loaderscene = new FXMLLoader(getClass().getResource("main_window.fxml"));
+            Parent root = loaderscene.load();
+
+            Stage loginStage = (Stage) userFieldL.getScene().getWindow();
+            loginStage.close();
+
+            Stage mainStage = new Stage();
+            Scene scene = new Scene(root, 1300, 720);
+            scene.setFill(Color.TRANSPARENT);
+
+            mainStage.initStyle(StageStyle.TRANSPARENT);
+            mainStage.setScene(scene);
+            mainStage.show();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            LoggerUtil.log(Level.SEVERE, "Error loading main window");
+            CustomAlert.show("Error", "Failed to load the main window. Please contact support.");
         }
     }
 
 
     private boolean authenticateUser(String username, String password) {
-        String sql = "SELECT password FROM sec_users WHERE username = ?";
+        String sql = "SELECT password FROM hotel_staff WHERE username = ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -129,12 +143,19 @@ public class LoginController {
 
             if (rs.next()) {
                 String storedHashedPassword = rs.getString("password");
+                boolean isVerified = PasswordUtil.verifyPassword(password, storedHashedPassword);
 
-
-                return PasswordUtil.verifyPassword(password, storedHashedPassword);
+                if (isVerified) {
+                    LoggerUtil.log(Level.INFO, "User '" + username + "' successfully authenticated.");
+                } else {
+                    LoggerUtil.log(Level.WARNING, "Authentication failed for user '" + username + "'. Incorrect password.");
+                }
+                return isVerified;
+            } else {
+                LoggerUtil.log(Level.WARNING, "Authentication failed for user '" + username + "'. User not found.");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LoggerUtil.log(Level.SEVERE, "Error occurred during authentication for user '" + username + "'");
         }
 
         return false;

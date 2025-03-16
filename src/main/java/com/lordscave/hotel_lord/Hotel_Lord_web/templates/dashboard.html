@@ -23,7 +23,6 @@
     <div class="container">
         <h2>Book a Room</h2>
     
-        
         {% with messages = get_flashed_messages(with_categories=True) %}
             {% if messages %}
                 <div class="alert-container">
@@ -34,48 +33,86 @@
             {% endif %}
         {% endwith %}
     
-   
         <form action="{{ url_for('book_room') }}" method="POST" onsubmit="return validateDates()">
-            <div class="mb-3">
-                <label class="form-label">Full Name :</label>
-                <input type="text" name="name" class="form-control" value="{{ current_user.username }}" readonly>
+            
+            <div class="form-grid">
+                <div class="form-group">
+                    <label class="form-label">Full Name :</label>
+                    <input type="text" name="name" class="form-control" value="{{ current_user.username }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Contact No :</label>
+                    <input type="tel" name="contactNo" class="form-control" required pattern="[0-9]{10}" 
+                        title="Enter a valid 10-digit phone number" value="{{ current_user.contactno }}">
+                </div>
             </div>
-            <div class="mb-3">
-                <label class="form-label">Age :</label>
-                <input type="number" name="age" class="form-control" required min="18">
+    
+            <div class="form-grid">
+                <div class="form-group">
+                    <label class="form-label">Aadhar Card No :</label>
+                    <input type="tel" name="aadhar" class="form-control" required pattern="[0-9]{12}" 
+                        title="Enter a valid 12-digit Aadhar number" value="{{ current_user.aadhar }}">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Age :</label>
+                    <input type="number" name="age" class="form-control" required min="18" value="{{ current_user.age }}">
+                </div>
             </div>
-            <div class="mb-3">
-                <label class="form-label">Gender :</label>
-                <select name="gender" class="form-select" required>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Other">Other</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Number of Guests :</label>
-                <input type="number" name="guests" class="form-control" required min="1">
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Check-in Date :</label>
-                <input type="date" name="checkin_date" id="checkin_date" class="form-control" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Check-out Date :</label>
-                <input type="date" name="checkout_date" id="checkout_date" class="form-control" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Select Suite Type :</label>
-                <select name="room_type" class="form-select" required>
-                    {% for suite in suites %}
-                        <option value="{{ suite.roomtype }}">{{ suite.roomtype }} - ${{ suite.ratepernight }} per night</option>
-                    {% endfor %}
-                </select>
+    
+            <div class="form-grid">
+                <div class="form-group">
+                    <label class="form-label">Gender :</label>
+                    <select name="gender" class="form-select" required>
+                        <option value="Male" {% if current_user.gender == "Male" %}selected{% endif %}>Male</option>
+                        <option value="Female" {% if current_user.gender == "Female" %}selected{% endif %}>Female</option>
+                        <option value="Other" {% if current_user.gender == "Other" %}selected{% endif %}>Other</option>
+                    </select>
+                </div>
             </div>
             
+            <div class="form-grid">
+                <div class="form-group full-width">
+                    <label class="form-label">Address :</label>
+                    <textarea name="address" class="form-control large-textarea" rows="3" required>{{ current_user.address }}</textarea>
+                </div>
+            </div>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label class="form-label">Check-in Date :</label>
+                    <input type="date" name="checkin_date" id="checkin_date" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Check-out Date :</label>
+                    <input type="date" name="checkout_date" id="checkout_date" class="form-control" required>
+                </div>
+            </div>
+    
+          
+          
+                <div class="form-group">
+                    <label class="form-label">Number of Guests :</label>
+                    <input type="number" name="guests" class="form-control" required min="1">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Select Suite Type :</label>
+                    <select name="room_type" class="form-select" required>
+                        {% for suite in suites %}
+                            <option value="{{ suite[0] }}">
+                                {{ suite[0] }} - ${{ suite[2] }} per night ({{ suite[1] }} available) Beds {{ suite[3] }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            
+    
+
+    
             <button type="submit" class="btn btn-primary w-100">Book Now</button>
         </form>
     </div>
+    
+    
 
     <script>
         function validateDates() {

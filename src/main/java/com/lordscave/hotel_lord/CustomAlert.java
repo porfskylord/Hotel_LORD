@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.util.Objects;
+import java.util.logging.Level;
 
 public class CustomAlert {
 
@@ -31,32 +32,56 @@ public class CustomAlert {
 
     @FXML
     public void initialize() {
-
-        closeBtn.setOnAction(event -> ((Stage) closeBtn.getScene().getWindow()).close());
-        okBtn.setOnAction(event -> ((Stage) okBtn.getScene().getWindow()).close());
-
-
-        if (appIcon != null) {
-            try {
-                Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/lordscave/hotel_lord/images/hotel_lord_icon.png")));
-                appIcon.setImage(icon);
-            } catch (NullPointerException e) {
-                System.err.println("Warning: Application icon not found!");
-            }
+        if (closeBtn != null) {
+            closeBtn.setOnAction(event -> closeWindow());
+        }
+        if (okBtn != null) {
+            okBtn.setOnAction(event -> closeWindow());
         }
 
+        if (appIcon != null) {
+            loadAppIcon();
+        }
 
-        titleBar.setOnMousePressed(event -> {
-            xOffset = event.getSceneX();
-            yOffset = event.getSceneY();
-        });
-
-        titleBar.setOnMouseDragged(event -> {
-            Stage stage = (Stage) titleBar.getScene().getWindow();
-            stage.setX(event.getScreenX() - xOffset);
-            stage.setY(event.getScreenY() - yOffset);
-        });
+        setupDraggableWindow();
     }
+
+
+    private void loadAppIcon() {
+        try {
+            Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream(
+                    "/com/lordscave/hotel_lord/images/hotel_lord_icon.png"
+            )));
+            appIcon.setImage(icon);
+        } catch (NullPointerException | IllegalArgumentException e) {
+            LoggerUtil.log(Level.WARNING, "Application icon not found for CustomAlert.", e);
+        }
+    }
+
+
+    private void setupDraggableWindow() {
+        if (titleBar != null) {
+            titleBar.setOnMousePressed(event -> {
+                xOffset = event.getSceneX();
+                yOffset = event.getSceneY();
+            });
+
+            titleBar.setOnMouseDragged(event -> {
+                Stage stage = (Stage) titleBar.getScene().getWindow();
+                stage.setX(event.getScreenX() - xOffset);
+                stage.setY(event.getScreenY() - yOffset);
+            });
+        }
+    }
+
+
+    private void closeWindow() {
+        Stage stage = (Stage) closeBtn.getScene().getWindow();
+        if (stage != null) {
+            stage.close();
+        }
+    }
+
 
     private static void showAlert(String title, String message, boolean waitForResponse) {
         try {
@@ -64,6 +89,11 @@ public class CustomAlert {
             Parent root = loader.load();
 
             CustomAlert controller = loader.getController();
+            if (controller == null) {
+                LoggerUtil.log(Level.SEVERE, "Failed to load CustomAlert controller.");
+                return;
+            }
+
             controller.alertTitle.setText(title);
             controller.alertMessage.setText(message);
 
@@ -78,13 +108,15 @@ public class CustomAlert {
                 alertStage.show();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LoggerUtil.log(Level.SEVERE, "Failed to load CustomAlert window.", e);
         }
     }
+
 
     public static void show(String title, String message) {
         showAlert(title, message, false);
     }
+
 
     public static void showAndWait(String title, String message) {
         showAlert(title, message, true);

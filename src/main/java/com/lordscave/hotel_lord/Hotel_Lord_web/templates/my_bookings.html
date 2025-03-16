@@ -22,10 +22,10 @@
         {% if bookings %}
             {% for booking in bookings %}
                 <div class="booking-card">
-                    <p>Suite Type: {{ booking.suittype }}</p> 
+                    <p>Suite Type: {{ booking.roomtype }}</p> 
                     <p>Check-in: {{ booking.checkin_date }}</p>
                     <p>Check-out: {{ booking.checkout_date }}</p>
-                    <p>Total Price: ${{ booking.total_price }}</p>
+                    <p>Total Price: ${{ (booking.checkout_date - booking.checkin_date).days * booking.ratepernight }}</p>
                     <p>Status: {{ booking.payment_status }}</p>
     
                     <a href="{{ url_for('cancel_booking', booking_id=booking.id) }}">

@@ -17,13 +17,24 @@
         </div>
     </div>
 
+
+    <div class="alert-container">
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
     <div class="container" id="mainContent">
         <h2>Welcome to HotelLord</h2>
         <p>Book your room now with easy online payment and cancellation options.</p>
         <button class="btn" onclick="openPopup('loginPopup')">Login to Book</button>
     </div>
 
-  
+
     <div id="loginPopup" class="popup">
         <div class="popup-content">
             <span class="close" onclick="closeAllPopups()">&times;</span>
@@ -38,19 +49,48 @@
     </div>
 
 
-    <div id="registerPopup" class="popup">
-        <div class="popup-content">
-            <span class="close" onclick="closeAllPopups()">&times;</span>
-            <h2>Create an Account</h2>
-            <form action="{{ url_for('register') }}" method="POST">
+<div id="registerPopup" class="popup">
+    <div class="popup-content">
+        <span class="close" onclick="closeAllPopups()">&times;</span>
+        <h2>Create an Account</h2>
+        <form action="{{ url_for('register') }}" method="POST">
+            <div class="form-group">
                 <input type="text" name="username" placeholder="Username" required>
+            </div>
+            <div class="form-group">
+                <input type="tel" name="contactNo" class="form-control" placeholder="Contact No" required pattern="[0-9]{10}" 
+                       title="Enter a valid 10-digit phone number">
+            </div>
+            <div class="form-group">
                 <input type="email" name="email" placeholder="Email" required>
+            </div>
+            <div class="form-group">
                 <input type="password" name="password" placeholder="Password" required>
-                <button class="btn" type="submit">Register</button>
-            </form>
-            <p>Already have an account? <a href="#" onclick="switchPopup('registerPopup', 'loginPopup')">Login here</a></p>
-        </div>
+            </div>
+            <div class="form-group">
+                <input type="number" name="age" class="form-control" required min="18" placeholder="Age">
+            </div>
+            <div class="form-group">
+                <select name="gender" class="form-control" required>
+                    <option value="" disabled selected>Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <input type="tel" name="aadhar" class="form-control" placeholder="Aadhar Card No" required pattern="[0-9]{12}" 
+                       title="Enter a valid 12-digit Aadhar number">
+            </div>
+            <div class="form-group">
+                <textarea name="address" class="form-control popup-textarea" rows="3" required placeholder="Address"></textarea>
+            </div>
+            <button class="btn" type="submit">Register</button>
+        </form>
+        <p class="login-link">Already have an account? <a href="#" onclick="switchPopup('registerPopup', 'loginPopup')">Login here</a></p>
     </div>
+</div>
 
     <script>
         function openPopup(id) {
@@ -68,6 +108,13 @@
             document.getElementById(current).style.display = "none";
             document.getElementById(target).style.display = "block";
         }
+
+        // Auto-hide alerts after 5 seconds
+        setTimeout(() => {
+            document.querySelectorAll('.alert').forEach(alert => {
+                alert.style.display = 'none';
+            });
+        }, 5000);
     </script>
 </body>
 </html>

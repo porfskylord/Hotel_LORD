@@ -13,6 +13,9 @@ import java.io.IOException;
 public class HotelLord extends Application {
     @Override
     public void start(Stage stage) throws IOException {
+
+        LoggerUtil.setDatabaseLoggingEnabled(false);
+
         FXMLLoader fxmlLoader = new FXMLLoader(HotelLord.class.getResource("Login.fxml"));
         Parent root = fxmlLoader.load();
 
@@ -22,6 +25,8 @@ public class HotelLord extends Application {
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.setScene(scene);
         stage.show();
+
+        LoggerUtil.log(java.util.logging.Level.INFO, "Application started successfully.");
     }
 
     public static void main(String[] args) {
