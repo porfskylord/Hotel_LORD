@@ -1,4 +1,4 @@
-package com.lordscave.hotel_lord;
+package com.lordscave.hotel_lord.utilities;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,12 +11,10 @@ public class DatabaseLogger {
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-
             stmt.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
             stmt.setString(2, level.getName());
             stmt.setString(3, message);
             stmt.setString(4, (thrown != null) ? thrown.toString() : null);
-
             stmt.executeUpdate();
         } catch (Exception e) {
             fallbackFileLogging(e);

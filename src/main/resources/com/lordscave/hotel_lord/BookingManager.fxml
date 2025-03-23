@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane style="-fx-background-color: #181818;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lordscave.hotel_lord.Controllers.BookingController">
+
+    <top>
+        <HBox prefHeight="60.0" prefWidth="890.0" spacing="15" style="-fx-background-color: #1E1E1E; -fx-padding: 15px; -fx-alignment: center-left;">
+            <Label style="-fx-font-size: 18px; -fx-text-fill: white;" text="🛏 Reservation And Check-In" />
+            <Region HBox.hgrow="ALWAYS" />
+             <Button fx:id="btnRequestBookingNow" onAction="#handleRequestBookingNow" prefHeight="30.0" prefWidth="134.0" style="-fx-background-color: #F57C00; -fx-text-fill: white;" text="Request Booking Now" />
+             <Button fx:id="btnOnlineBookingRequests" onAction="#handleOnlineBookingRequests" prefHeight="30.0" prefWidth="149.0" style="-fx-background-color: #1976D2; -fx-text-fill: white;" text="Booking Requests" />
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" pannable="true" style="-fx-background: #1e1e1e; -fx-border-color: transparent; -fx-padding: 10px;" vbarPolicy="ALWAYS">
+
+            <VBox fx:id="bookingDetailsContainer" style="-fx-padding: 20px; -fx-spacing: 15px; -fx-background-color: #1e1e1e; -fx-alignment: top_left;">
+                <Label style="-fx-font-size: 16px; -fx-text-fill: white; -fx-font-weight: bold;" text="Guest Details" />
+                <GridPane hgap="10" vgap="10">
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="22.0" />
+                        <ColumnConstraints percentWidth="30.0" />
+                        <ColumnConstraints percentWidth="18.0" />
+                        <ColumnConstraints percentWidth="30.0" />
+                    </columnConstraints>
+                    <Label style="-fx-text-fill: white;" text="Guest Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <TextField fx:id="guestNameField" editable="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" style="-fx-background-color: #333;-fx-text-fill: #B0B0B0;" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="0" />
+                    <Label style="-fx-text-fill: white;" text="Email:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <TextField fx:id="emailField" editable="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" style="-fx-background-color: #333;-fx-text-fill: #B0B0B0;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <Label style="-fx-text-fill: white;" text="Contact No:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                    <TextField fx:id="contactNoField" editable="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" style="-fx-background-color: #333;-fx-text-fill: #B0B0B0;" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                    <Label style="-fx-text-fill: white;" text="Age:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                    <TextField fx:id="ageField" editable="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" style="-fx-background-color: #333;-fx-text-fill: #B0B0B0;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    <Label style="-fx-text-fill: white;" text="Gender:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                    <TextField fx:id="genderField" editable="false" prefHeight="30.0" style="-fx-background-color: #333;-fx-text-fill: #B0B0B0;" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                    <Label style="-fx-text-fill: white;" text="Check-in Date:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                    <TextField fx:id="checkinDateField" editable="false" prefHeight="30.0" style="-fx-background-color: #333;-fx-text-fill: #B0B0B0;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                    <Label style="-fx-text-fill: white;" text="Check-out Date:" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                    <TextField fx:id="checkoutDateField" editable="false" prefHeight="30.0" style="-fx-background-color: #333;-fx-text-fill: #B0B0B0;" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                    <Label style="-fx-text-fill: white;" text="Room Type:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                    <TextField fx:id="roomTypeField" editable="false" prefHeight="30.0" style="-fx-background-color: #333;-fx-text-fill: #B0B0B0;" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="5" />
+                    <Label style="-fx-text-fill: white;" text="Address:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                    <TextArea fx:id="addressField" editable="false" prefHeight="60.0" prefRowCount="2" style="-fx-background-color: #333;-fx-text-fill: #B0B0B0;" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4" />
+                    <rowConstraints>
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                    </rowConstraints>
+                </GridPane>
+                <Label style="-fx-font-size: 16px; -fx-text-fill: white; -fx-font-weight: bold;" text="Assign Room" />
+                <HBox spacing="10">
+                    <ComboBox fx:id="availableRoomsCombo" editable="true" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="710.0" promptText="Select Available Room" />
+                    <Button fx:id="refreshRoomsBtn" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" style="-fx-background-color: #6A11CB; -fx-text-fill: white;" text="Refresh Rooms" />
+                </HBox>
+                <Label style="-fx-font-size: 16px; -fx-text-fill: white; -fx-font-weight: bold;" text="ID Verification" />
+                <HBox spacing="10">
+                    <ComboBox fx:id="idTypeCombo" editable="true" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" promptText="Select ID Type">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Passport" />
+                                <String fx:value="Aadhaar" />
+                                <String fx:value="Driving License" />
+                            </FXCollections>
+                        </items>
+                    </ComboBox>
+                    <TextField fx:id="idNumberField" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" promptText="Enter ID Number" style="-fx-background-color: #333;-fx-text-fill: #B0B0B0;" />
+                </HBox>
+                <Label style="-fx-font-size: 16px; -fx-text-fill: white; -fx-font-weight: bold;" text="Signature And Photo Capture" />
+                <HBox spacing="10">
+                    <Button fx:id="captureSignatureBtn" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="115.0" style="-fx-background-color: #6A11CB; -fx-text-fill: white;" text="Capture Signature" />
+                    <Button fx:id="capturePhotoBtn" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #2575FC; -fx-text-fill: white;" text="Capture Photo" />
+                </HBox>
+                <Label style="-fx-font-size: 16px; -fx-text-fill: white; -fx-font-weight: bold;" text="Additional Services" />
+                <HBox spacing="10">
+                    <CheckBox fx:id="foodService" style="-fx-text-fill: white;" text="Food" />
+                    <CheckBox fx:id="laundryService" style="-fx-text-fill: white;" text="Laundry" />
+                    <CheckBox fx:id="wifiService" style="-fx-text-fill: white;" text="WiFi" />
+                </HBox>
+                <Label style="-fx-font-size: 16px; -fx-text-fill: white; -fx-font-weight: bold;" text="Payment Details" />
+                <GridPane hgap="10" vgap="10">
+                    <Label style="-fx-text-fill: white;" text="Total Amount:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <TextField fx:id="totalAmountField" editable="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="163.0" style="-fx-background-color: #333;-fx-text-fill: #B0B0B0;" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                    <Label style="-fx-text-fill: white;" text="Advance Payment:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <TextField fx:id="advancePaymentField" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" style="-fx-background-color: #333;-fx-text-fill: #B0B0B0;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                    <Label style="-fx-text-fill: white;" text="Balance Due:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                    <TextField fx:id="balanceDueField" editable="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" style="-fx-background-color: #333;-fx-text-fill: #B0B0B0;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    <columnConstraints>
+                        <ColumnConstraints maxWidth="129.0" minWidth="97.0" prefWidth="106.0" />
+                        <ColumnConstraints maxWidth="200.0" minWidth="118.0" prefWidth="200.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                    </rowConstraints>
+                </GridPane>
+                <Label style="-fx-font-size: 16px; -fx-text-fill: white; -fx-font-weight: bold;" text="Special Remarks" />
+                <TextField fx:id="remarksField" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="815.0" promptText="Any additional instructions..." style="-fx-background-color: #333;-fx-text-fill: #B0B0B0;" />
+                <HBox spacing="10">
+                    <Button fx:id="confirmCheckinBtn" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="115.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Confirm Check-In" />
+                    <Button fx:id="cancelCheckinBtn" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #FF5733; -fx-text-fill: white;" text="Cancel" />
+                </HBox>
+
+            </VBox>
+        </ScrollPane>
+
+    </center>
+</BorderPane>

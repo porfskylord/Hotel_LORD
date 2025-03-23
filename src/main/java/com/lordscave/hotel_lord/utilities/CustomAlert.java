@@ -1,5 +1,6 @@
-package com.lordscave.hotel_lord;
+package com.lordscave.hotel_lord.utilities;
 
+import com.lordscave.hotel_lord.utilities.LoggerUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,7 +14,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
 import java.util.Objects;
 import java.util.logging.Level;
 
@@ -65,7 +65,6 @@ public class CustomAlert {
                 xOffset = event.getSceneX();
                 yOffset = event.getSceneY();
             });
-
             titleBar.setOnMouseDragged(event -> {
                 Stage stage = (Stage) titleBar.getScene().getWindow();
                 stage.setX(event.getScreenX() - xOffset);
@@ -93,10 +92,8 @@ public class CustomAlert {
                 LoggerUtil.log(Level.SEVERE, "Failed to load CustomAlert controller.");
                 return;
             }
-
             controller.alertTitle.setText(title);
             controller.alertMessage.setText(message);
-
             Stage alertStage = new Stage();
             alertStage.initModality(Modality.APPLICATION_MODAL);
             alertStage.initStyle(StageStyle.UNDECORATED);

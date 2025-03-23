@@ -1,4 +1,4 @@
-package com.lordscave.hotel_lord;
+package com.lordscave.hotel_lord.utilities;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
@@ -25,36 +25,23 @@ public class LoaderPopup {
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.initModality(Modality.APPLICATION_MODAL);
 
+        Pane root = new Pane();
+        root.setStyle("-fx-background-color: transparent;");
 
         List<Line> starLines = createStarLines();
-        Pane root = new Pane();
-        root.setStyle("-fx-background-color: rgba(0, 0, 0, 0);");
-
-
-        for (Line line : starLines) {
-            line.setStrokeWidth(4);
-            line.setStrokeLineCap(StrokeLineCap.ROUND);
-            line.setOpacity(0);
-            root.getChildren().add(line);
-        }
-
-
+        starLines.forEach(root.getChildren()::add);
         animateStarDrawing(starLines);
 
-        Scene scene = new Scene(root, 120, 120);
-        scene.setFill(Color.TRANSPARENT);
+        Scene scene = new Scene(root, 120, 120, Color.TRANSPARENT);
         stage.setScene(scene);
     }
-
 
     private List<Line> createStarLines() {
         double centerX = 60, centerY = 60, radius = 40;
         double innerRadius = radius / 2.5;
         double angle = Math.toRadians(-90);
-
         List<Line> lines = new ArrayList<>();
         double[][] points = new double[10][2];
-
 
         for (int i = 0; i < 10; i++) {
             double r = (i % 2 == 0) ? radius : innerRadius;
@@ -63,35 +50,30 @@ public class LoaderPopup {
             angle += Math.toRadians(36);
         }
 
-
         int[] order = {0, 5, 2, 7, 4, 9, 6, 1, 8, 3, 0};
         for (int i = 0; i < order.length - 1; i++) {
             Line line = new Line(points[order[i]][0], points[order[i]][1],
                     points[order[i + 1]][0], points[order[i + 1]][1]);
             line.setStroke(createGradient());
+            line.setStrokeWidth(4);
+            line.setStrokeLineCap(StrokeLineCap.ROUND);
+            line.setOpacity(0);
             lines.add(line);
         }
-
         return lines;
     }
 
-
     private void animateStarDrawing(List<Line> starLines) {
-        List<FadeTransition> transitions = new ArrayList<>();
-
+        SequentialTransition sequentialTransition = new SequentialTransition();
         for (Line line : starLines) {
             FadeTransition transition = new FadeTransition(Duration.seconds(0.1), line);
             transition.setFromValue(0);
             transition.setToValue(1);
-            transitions.add(transition);
+            sequentialTransition.getChildren().add(transition);
         }
-
-
-        SequentialTransition sequentialTransition = new SequentialTransition(transitions.toArray(new FadeTransition[0]));
         sequentialTransition.setCycleCount(SequentialTransition.INDEFINITE);
         sequentialTransition.play();
     }
-
 
     private LinearGradient createGradient() {
         return new LinearGradient(0, 0, 1, 0, true, null,

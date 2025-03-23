@@ -62,6 +62,10 @@ class Booking(db.Model):
     noofguest = db.Column(db.Integer, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    bookingtype = db.Column(db.String(225))
+    isdeleted = db.Column(db.Boolean, nullable=False, server_default="false")
+
+  
 
 
 
@@ -78,7 +82,7 @@ def register():
         password = bcrypt.generate_password_hash(request.form["password"]).decode("utf-8")
         contactno = request.form["contactNo"]
         gender = request.form["gender"]   
-        aadhar = request.form["aadhar"]
+        # aadhar = request.form["aadhar"]
         address = request.form["address"]
         age = int(request.form["age"])
 
@@ -217,7 +221,8 @@ def book_room():
         checkin_date=checkin_date,
         checkout_date=checkout_date,
         total_price=total_price,
-        noofguest=noofguest
+        noofguest=noofguest,
+        bookingtype='Online'
     )
 
     db.session.add(new_booking)
@@ -236,11 +241,13 @@ def cancel_booking(booking_id):
         flash("Booking not found!", "danger")
         return redirect(url_for("dashboard"))
 
-    db.session.delete(booking)
+    # Instead of deleting, update `isdeleted` to True
+    booking.isdeleted = True
     db.session.commit()
 
     flash("Booking request canceled!", "info")
     return redirect(url_for("dashboard"))
+
 
 # @app.route("/pay/<int:booking_id>", methods=["POST"])
 # @login_required

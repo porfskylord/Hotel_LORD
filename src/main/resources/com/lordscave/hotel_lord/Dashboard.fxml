@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane style="-fx-background-color: #181818;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lordscave.hotel_lord.Controllers.DashboardController">
+
+    <top>
+        <HBox spacing="10.0" style="-fx-background-color: #1E1E1E; -fx-padding: 15px;">
+            <Label style="-fx-font-size: 18px; -fx-text-fill: #FFFFFF;" text="🏨 Hotel Management Dashboard" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Button fx:id="btnPendingCheckins" style="-fx-background-color: #303030; -fx-text-fill: #FFFFFF;" text="Pending Check-ins" />
+            <Button fx:id="btnPendingCheckouts" style="-fx-background-color: #303030; -fx-text-fill: #FFFFFF;" text="Pending Check-outs" />
+            <Button fx:id="btnRoomStatus" style="-fx-background-color: #303030; -fx-text-fill: #FFFFFF;" text="Room Status" />
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="20" style="-fx-padding: 20px;">
+            <HBox spacing="20">
+                <VBox style="-fx-background-color: #2E7D32; -fx-padding: 15px; -fx-background-radius: 10px;">
+                    <Label style="-fx-font-size: 16px; -fx-text-fill: white;" text="Total Bookings" />
+                    <Label fx:id="lblTotalBookings" style="-fx-font-size: 20px; -fx-text-fill: white;" text="120" />
+                </VBox>
+
+                <VBox style="-fx-background-color: #1565C0; -fx-padding: 15px; -fx-background-radius: 10px;">
+                    <Label style="-fx-font-size: 16px; -fx-text-fill: white;" text="Available Rooms" />
+                    <Label fx:id="lblAvailableRooms" style="-fx-font-size: 20px; -fx-text-fill: white;" text="15" />
+                </VBox>
+
+                <VBox style="-fx-background-color: #D32F2F; -fx-padding: 15px; -fx-background-radius: 10px;">
+                    <Label style="-fx-font-size: 16px; -fx-text-fill: white;" text="Revenue (₹)" />
+                    <Label fx:id="lblRevenue" style="-fx-font-size: 20px; -fx-text-fill: white;" text="₹5,00,000" />
+                </VBox>
+
+                <VBox style="-fx-background-color: #7B1FA2; -fx-padding: 15px; -fx-background-radius: 10px;">
+                    <Label style="-fx-font-size: 16px; -fx-text-fill: white;" text="Current Guests" />
+                    <Label fx:id="lblGuests" style="-fx-font-size: 20px; -fx-text-fill: white;" text="45" />
+                </VBox>
+            </HBox>
+
+            <HBox spacing="20">
+                <PieChart fx:id="pieRoomOccupancy" prefHeight="300" prefWidth="300" style="-fx-background-color: #1E1E1E;" />
+                <BarChart fx:id="barRevenueStats" prefHeight="300" prefWidth="400" style="-fx-background-color: #1E1E1E;">
+                    <xAxis>
+                        <CategoryAxis fx:id="xAxis" />
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis fx:id="yAxis" />
+                    </yAxis>
+                </BarChart>
+            </HBox>
+
+            <VBox style="-fx-background-color: #F57C00; -fx-padding: 10px; -fx-background-radius: 5px;">
+                <Label style="-fx-font-size: 16px; -fx-text-fill: white;" text="🔔 Notifications" />
+                <ListView fx:id="lstNotifications" style="-fx-background-color: #303030; -fx-text-fill: #FFFFFF;" />
+            </VBox>
+        </VBox>
+    </center>
+</BorderPane>

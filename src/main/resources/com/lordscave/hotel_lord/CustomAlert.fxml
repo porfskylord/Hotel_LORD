@@ -1,76 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.effect.Bloom?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.paint.LinearGradient?>
-<?import javafx.scene.paint.Stop?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
 
-<VBox fx:id="root" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="530.0" style="-fx-background-color: #181818; -fx-border-radius: 10; -fx-border-color: #444; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 5);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lordscave.hotel_lord.CustomAlert">
+<VBox fx:id="root" alignment="TOP_CENTER" prefHeight="180.0" prefWidth="530.0" style="-fx-background-color: #181818; -fx-border-radius: 10; -fx-border-color: #444; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 5);" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lordscave.hotel_lord.utilities.CustomAlert">
 
-                <!-- Custom Title Bar -->
-    <HBox fx:id="titleBar" alignment="CENTER" prefHeight="39.0" prefWidth="525.0" style="-fx-background-color: #181818; -fx-padding: 10px; -fx-border-radius: 8px;">
-
-        <!-- App Icon (Left Side) -->
+    <HBox fx:id="titleBar" alignment="CENTER" prefHeight="39.0" prefWidth="525.0" style="-fx-background-color: #181818; -fx-padding: 10px; -fx-background-radius: 8px;">
         <ImageView fx:id="appIcon" fitHeight="20" fitWidth="20" />
-
-        <!-- Spacer to push label to the center -->
         <Region HBox.hgrow="ALWAYS" />
-
-        <!-- Application Title (Centered) -->
         <Label fx:id="alertTitle" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Custom Alert">
-         <textFill>
-            <LinearGradient endX="1.0" endY="1.0">
-               <stops>
-                  <Stop>
-                     <color>
-                        <Color red="0.4156862795352936" green="0.06666667014360428" blue="0.9019607901573181" />
-                     </color>
-                  </Stop>
-                  <Stop offset="1.0">
-                     <color>
-                        <Color red="0.14509804546833038" green="0.07450980693101883" blue="0.9803921580314636" />
-                     </color>
-                  </Stop>
-               </stops>
-            </LinearGradient>
-         </textFill></Label>
-
-        <!-- Another Spacer to push the button to the right -->
+            <textFill>
+                <LinearGradient endX="1.0" endY="1.0">
+                    <stops>
+                        <Stop color="#6a11cb" offset="0.0" />
+                        <Stop color="#2575fc" offset="1.0" />
+                    </stops>
+                </LinearGradient>
+            </textFill>
+        </Label>
         <Region HBox.hgrow="ALWAYS" />
-
-        <!-- Close Button (Right Side) -->
         <Button fx:id="closeBtn" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 5px;" text="❌" />
-
     </HBox>
 
-             <!-- Content Area -->
     <Label fx:id="alertMessage" style="-fx-text-fill: #ddd; -fx-font-size: 14px; -fx-padding: 10px;" text="This is a modern dark-themed alert!" wrapText="true">
-      <VBox.margin>
-         <Insets top="20.0" />
-      </VBox.margin>
-   </Label>
+        <VBox.margin>
+            <Insets top="20.0" />
+        </VBox.margin>
+    </Label>
 
-                <!-- Buttons Section -->
-    <HBox alignment="CENTER" prefHeight="94.0" prefWidth="492.0" spacing="15" style="-fx-padding: 10px;">
-        <Button fx:id="okBtn" prefHeight="25.0" prefWidth="120.0" style="-fx-background-color: linear-gradient(to right, #6A11CB, #2575FC); -fx-background-radius: 5;" text="OK" textFill="WHITE">
-         <HBox.margin>
-            <Insets bottom="10.0" left="400.0" />
-         </HBox.margin>
-      </Button>
+    <HBox alignment="CENTER" spacing="15" style="-fx-padding: 10px;">
+        <Button fx:id="okBtn" prefHeight="25.0" prefWidth="120.0" style="-fx-background-color: linear-gradient(to right, #6A11CB, #2575FC); -fx-background-radius: 5;" text="OK" textFill="WHITE" />
+    </HBox>
 
-                </HBox>
-   <effect>
-      <Bloom />
-   </effect>
-   <padding>
-      <Insets left="10.0" right="10.0" />
-   </padding>
+    <effect>
+        <Bloom />
+    </effect>
+
+    <padding>
+        <Insets left="10.0" right="10.0" />
+    </padding>
 
 </VBox>

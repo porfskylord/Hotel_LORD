@@ -49,9 +49,10 @@
     
             <div class="form-grid">
                 <div class="form-group">
-                    <label class="form-label">Aadhar Card No :</label>
-                    <input type="tel" name="aadhar" class="form-control" required pattern="[0-9]{12}" 
-                        title="Enter a valid 12-digit Aadhar number" value="{{ current_user.aadhar }}">
+                    <label class="form-label">E Mail :</label>
+                    <input type="tel" name="aadhar" class="form-control" required 
+                    pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" 
+                    title="Enter a valid email address" value="{{ current_user.email }}">
                 </div>
                 <div class="form-group">
                     <label class="form-label">Age :</label>

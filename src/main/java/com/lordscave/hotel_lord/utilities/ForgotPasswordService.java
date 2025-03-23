@@ -1,5 +1,6 @@
-package com.lordscave.hotel_lord;
+package com.lordscave.hotel_lord.utilities;
 
+import com.lordscave.hotel_lord.Controllers.ResetPasswordController;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,12 +11,10 @@ import javafx.stage.StageStyle;
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.Optional;
 import java.util.Properties;
 import java.util.Random;
 import java.util.logging.Level;
@@ -24,19 +23,16 @@ public class ForgotPasswordService {
 
     public static void processForgotPassword(String username) {
         String email = getUserEmail(username);
-
         if (email == null) {
             Platform.runLater(() -> CustomAlert.show("Error", "No account found for this username."));
             return;
         }
-
         LoaderPopup loader = new LoaderPopup();
         Platform.runLater(loader::show);
 
         new Thread(() -> {
             try {
                 String otp = generateOTP();
-
                 if (!storeOTPInDatabase(email, otp)) {
                     LoggerUtil.log(Level.WARNING, "Failed to store OTP in database for user: " + username);
                     Platform.runLater(() -> {
@@ -45,7 +41,6 @@ public class ForgotPasswordService {
                     });
                     return;
                 }
-
                 if (!sendOTPEmail(email, otp)) {
                     LoggerUtil.log(Level.WARNING, "Failed to send OTP email to: " + email);
                     Platform.runLater(() -> {
@@ -54,7 +49,6 @@ public class ForgotPasswordService {
                     });
                     return;
                 }
-
                 Platform.runLater(() -> {
                     loader.close();
                     CustomAlert.showAndWait("Success", "OTP has been sent to your email (Check Spam too).");
@@ -105,13 +99,11 @@ public class ForgotPasswordService {
     private static boolean sendOTPEmail(String recipientEmail, String otp) {
         final String senderEmail = "hotellord001@gmail.com";
         final String senderPassword = "hfyq ekby momd sfuw";
-
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
-
         Session session = Session.getInstance(props, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -125,7 +117,6 @@ public class ForgotPasswordService {
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail));
             message.setSubject("Your OTP for Password Reset");
             message.setText("Your OTP is: " + otp + "\n\nDo not share this code with anyone.");
-
             Transport.send(message);
             LoggerUtil.log(Level.INFO, "OTP email sent successfully to: " + recipientEmail);
             return true;
@@ -141,11 +132,9 @@ public class ForgotPasswordService {
             try {
                 FXMLLoader loader = new FXMLLoader(ForgotPasswordService.class.getResource("ResetPassword.fxml"));
                 Parent root = loader.load();
-
                 ResetPasswordController controller = loader.getController();
                 controller.setUserEmail(email);
                 controller.setOriginalOtp(originalOtp);
-
                 Stage stage = new Stage();
                 Scene scene = new Scene(root, 465, 270);
                 scene.setFill(Color.TRANSPARENT);

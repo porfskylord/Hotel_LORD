@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane style="-fx-background-color: #181818;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lordscave.hotel_lord.Controllers.BookingFormController">
+    <top>
+        <HBox fx:id="titleBar" alignment="CENTER" prefHeight="39.0" prefWidth="525.0" style="-fx-background-color: #181818; -fx-padding: 10px; -fx-border-radius: 8px;">
+            <Region HBox.hgrow="ALWAYS" />
+            <Label style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: linear-gradient(to right, #6A11CB, #2575FC);" text="Booking Requests" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Button fx:id="closeBtn" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 5px;" text="❌" />
+        </HBox>
+    </top>
+    <center>
+        <VBox prefHeight="650.0" prefWidth="700.0" spacing="20" style="-fx-padding: 20px; -fx-background-color: #202020;">
+            <Label style="-fx-font-size: 20px; -fx-text-fill: white; -fx-font-weight: bold;" text="🛏 Request Booking Now" />
+            <GridPane hgap="15" prefHeight="520.0" prefWidth="660.0" vgap="10">
+                <Label style="-fx-text-fill: white;" text="Full Name:" />
+                <TextField fx:id="txtFullName" style="-fx-background-color: #333; -fx-text-fill: #B0B0B0; -fx-border-color: transparent;" GridPane.columnIndex="1" />
+                <Label style="-fx-text-fill: white;" text="Contact No:" GridPane.rowIndex="1" />
+                <TextField fx:id="txtContactNumber" style="-fx-background-color: #333; -fx-text-fill: #B0B0B0; -fx-border-color: transparent;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <Label text="EMail:" textFill="WHITE" GridPane.rowIndex="2" />
+                <TextField fx:id="txtEmail" prefHeight="17.0" prefWidth="478.0" style="-fx-background-color: #333; -fx-text-fill: #B0B0B0; -fx-border-color: transparent;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <Label style="-fx-text-fill: white;" text="Age:" GridPane.rowIndex="3" />
+                <TextField fx:id="txtAge" style="-fx-background-color: #333; -fx-text-fill: #B0B0B0; -fx-border-color: transparent;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                <Label style="-fx-text-fill: white;" text="Gender:" GridPane.rowIndex="4" />
+                <ComboBox fx:id="cmbGender" editable="true" prefHeight="25.0" prefWidth="190.0" promptText="Select Gender" style="-fx-background-color: #333; -fx-text-fill: #B0B0B0;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                <Label style="-fx-text-fill: white;" text="Address:" GridPane.rowIndex="5" />
+                <TextArea fx:id="txtAddress" style="-fx-control-inner-background: #202020;-fx-text-fill: #B0B0B0;-fx-border-color: #444;-fx-border-width: 1px;-fx-border-radius: 5px;-fx-background-radius: 5px;" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                <Label style="-fx-text-fill: white;" text="Check-in Date:" GridPane.rowIndex="6" />
+                <DatePicker fx:id="dpCheckin" prefHeight="25.0" prefWidth="190.0" style="-fx-background-color: #333; -fx-text-fill: #B0B0B0;" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                <Label style="-fx-text-fill: white;" text="Check-out Date:" GridPane.rowIndex="7" />
+                <DatePicker fx:id="dpCheckout" prefHeight="25.0" prefWidth="190.0" style="-fx-background-color: #333; -fx-text-fill: #B0B0B0;" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                <Label style="-fx-text-fill: white;" text="Number of Guests:" GridPane.rowIndex="8" />
+                <TextField fx:id="txtGuests" style="-fx-background-color: #333; -fx-text-fill: #B0B0B0; -fx-border-color: transparent;" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                <Label style="-fx-text-fill: white;" text="Select Suite Type:" GridPane.rowIndex="9" />
+                <ComboBox fx:id="cmbRoomType" editable="true" prefHeight="25.0" prefWidth="478.0" style="-fx-background-color: #333; -fx-text-fill: #B0B0B0;" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                <columnConstraints>
+                    <ColumnConstraints minWidth="150" />
+                    <ColumnConstraints minWidth="250" />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                </rowConstraints>
+            </GridPane>
+            <HBox fillHeight="false" prefHeight="40.0" prefWidth="660.0" spacing="10">
+                <Button fx:id="btnBookNow" onAction="#saveBooking" prefHeight="30.0" prefWidth="125.0" style="-fx-background-color: #2E7D32; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px;" text="Book Now">
+                    <font><Font size="11.0" /></font>
+                </Button>
+                <Button fx:id="btnCancel" onAction="#clearForm" prefHeight="30.0" prefWidth="125.0" style="-fx-background-color: #B71C1C; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold;" text="Cancel" />
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

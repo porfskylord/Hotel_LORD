@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<BorderPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="555.0" prefWidth="684.0" style="-fx-background-color: #181818;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lordscave.hotel_lord.Controllers.OnlineBookingRequestsController">
+    <top>
+        <HBox fx:id="titleBar" alignment="CENTER" prefHeight="39.0" prefWidth="525.0" style="-fx-background-color: #181818; -fx-padding: 10px; -fx-border-radius: 8px;">
+            <Region HBox.hgrow="ALWAYS" />
+            <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Booking Requests">
+                <textFill>
+                    <LinearGradient endX="1.0" endY="1.0">
+                        <stops>
+                            <Stop>
+                                <color>
+                                    <Color red="0.4156862795352936" green="0.06666667014360428" blue="0.9019607901573181" />
+                                </color>
+                            </Stop>
+                            <Stop offset="1.0">
+                                <color>
+                                    <Color red="0.14509804546833038" green="0.07450980693101883" blue="0.9803921580314636" />
+                                </color>
+                            </Stop>
+                        </stops>
+                    </LinearGradient>
+                </textFill>
+            </Label>
+            <Region HBox.hgrow="ALWAYS" />
+            <Button fx:id="closeBtn" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 5px;" text="❌" />
+        </HBox>
+    </top>
+    <center>
+        <VBox spacing="20" style="-fx-padding: 20px; -fx-background-color: #202020;">
+            <TableView fx:id="tblBookings" style="-fx-background-color: #2C2C2C; -fx-border-color: #444; -fx-border-width: 1;">
+                <columns>
+                    <TableColumn fx:id="colbookingNo" text="Booking No." />
+                    <TableColumn fx:id="colbookingType" text="Booking Type" />
+                    <TableColumn fx:id="colGuestName" text="Guest Name" />
+                    <TableColumn fx:id="colContactNumber" text="Contact No." />
+                    <TableColumn fx:id="colCheckinDate" text="Check-in" />
+                    <TableColumn fx:id="colCheckoutDate" text="Check-out" />
+                    <TableColumn fx:id="colBookingStatus" text="Status" />
+                    <TableColumn fx:id="colroomType" text="Roomtype" />
+                </columns>
+            </TableView>
+            <HBox prefHeight="30.0" prefWidth="485.0" spacing="10">
+                <Button fx:id="btnClose" prefHeight="30.0" prefWidth="85.0" style="-fx-background-color: #B71C1C; -fx-text-fill: white; -fx-font-size: 14px;" text="Close" />
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane fx:id="mainBorderPane" prefHeight="720.0" prefWidth="1300.0" style="-fx-background-radius: 10; -fx-background-color: #181818;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lordscave.hotel_lord.Controllers.MainWindowController">
+    <top>
+        <HBox prefHeight="30.0" prefWidth="1300.0" spacing="10">
+            <Button fx:id="toggleButton" onAction="#toggleSidebar" prefHeight="25.0" prefWidth="46.0" style="-fx-background-color: transparent; -fx-text-fill: white;" text="☰">
+                <font><Font size="14.0" /></font>
+                <HBox.margin><Insets bottom="5.0" /></HBox.margin>
+                <padding><Insets bottom="4.0" /></padding>
+            </Button>
+            <Region HBox.hgrow="ALWAYS" />
+            <Label prefHeight="30.0" prefWidth="134.0" text="Hotel LORD">
+                <font><Font name="Yu Gothic UI Semibold" size="20.0" /></font>
+                <textFill>
+                    <LinearGradient endX="1.0" endY="1.0">
+                        <stops>
+                            <Stop><color><Color red="0.4157" green="0.0667" blue="0.7961" /></color></Stop>
+                            <Stop offset="1.0"><color><Color red="0.147" green="0.4663" blue="0.98" /></color></Stop>
+                        </stops>
+                    </LinearGradient>
+                </textFill>
+            </Label>
+            <Region HBox.hgrow="ALWAYS" />
+            <Button fx:id="closebtn" onAction="#closeWindow" prefHeight="25.0" prefWidth="46.0" style="-fx-background-color: transparent; -fx-text-fill: white;" text="❌">
+                <font><Font size="14.0" /></font>
+                <padding><Insets bottom="4.0" /></padding>
+            </Button>
+            <padding><Insets top="4.0" /></padding>
+        </HBox>
+    </top>
+    <left>
+        <VBox fx:id="menuContainer" prefWidth="250" spacing="10" style="-fx-padding: 10px; -fx-background-radius: 0 0 0 10px;" />
+    </left>
+    <center>
+
+    </center>
+</BorderPane>

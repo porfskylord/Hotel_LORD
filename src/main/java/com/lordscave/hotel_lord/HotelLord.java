@@ -1,5 +1,6 @@
 package com.lordscave.hotel_lord;
 
+import com.lordscave.hotel_lord.utilities.LoggerUtil;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,19 +14,14 @@ import java.io.IOException;
 public class HotelLord extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-
         LoggerUtil.setDatabaseLoggingEnabled(false);
-
         FXMLLoader fxmlLoader = new FXMLLoader(HotelLord.class.getResource("Login.fxml"));
         Parent root = fxmlLoader.load();
-
         Scene scene = new Scene(root, 565, 280);
         scene.setFill(Color.TRANSPARENT);
-
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.setScene(scene);
         stage.show();
-
         LoggerUtil.log(java.util.logging.Level.INFO, "Application started successfully.");
     }
 

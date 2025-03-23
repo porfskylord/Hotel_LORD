@@ -1,4 +1,4 @@
-package com.lordscave.hotel_lord;
+package com.lordscave.hotel_lord.utilities;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,10 +15,9 @@ public class LoggerUtil {
 
     public static void log(Level level, String message, Throwable thrown) {
         try {
-            LOGGER.log(level, message, thrown);
-
             if (enableDatabaseLogging) {
                 DatabaseLogger.log(level, message, thrown);
+                LOGGER.log(level, message, thrown);
             }
         } catch (Exception e) {
             fallbackFileLogging(e);
@@ -27,10 +26,9 @@ public class LoggerUtil {
 
     public static void log(Level level, String message) {
         try {
-            LOGGER.log(level, message);
-
             if (enableDatabaseLogging) {
                 DatabaseLogger.log(level, message);
+                LOGGER.log(level, message);
             }
         } catch (Exception e) {
             fallbackFileLogging(e);

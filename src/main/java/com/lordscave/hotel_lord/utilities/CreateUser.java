@@ -1,4 +1,4 @@
-package com.lordscave.hotel_lord;
+package com.lordscave.hotel_lord.utilities;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class CreateUser {
 
     public static void main(String[] args) {
-        String username = "a"; 
+        String username = "a";
         String rawPassword = "1";
         String hashedPassword = PasswordUtil.hashPassword(rawPassword);
 
